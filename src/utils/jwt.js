@@ -1,0 +1,10 @@
+const jwt = require("jsonwebtoken");
+
+// Genera un token con información mínima del usuario
+function signToken(payload) {
+    return jwt.sign(payload, process.env.JWT_SECRET, {
+    expiresIn: process.env.JWT_EXPIRES_IN || "1d",
+    });
+}
+
+module.exports = { signToken };
