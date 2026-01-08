@@ -7,8 +7,9 @@ const authRoutes = require("./routes/auth.routes");
 
 const app = express();
 
-app.use(express.json());
 app.use(cors());
+app.use(express.json());
+
 
 
 app.get("/health", (req, res) => {

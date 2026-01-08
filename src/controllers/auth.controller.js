@@ -1,16 +1,10 @@
-const { registeruser, loginUser } = require("../services/auth.service");
+const authService = require("../services/auth.service");
 
 async function register(req, res, next) {
     try {
         const { name, email, password } = req.body;
-
-        const result = await registeruser({ name, email, password });
-
-        return res.status(201).json({
-            success: true,
-            message: "User registered successfully",
-            data: result,
-        });
+        const data = await authService.registerUser(name, email, password);
+        res.status(201).json({ success: true, data });
     } catch (err) {
         next(err);
     }
@@ -18,18 +12,22 @@ async function register(req, res, next) {
 
 async function login(req, res, next) {
     try {
+        //console.log("email: "+email);
         const { email, password } = req.body;
-
-        const result = await loginUser({ email, password });
-
-        return res.status(200).json({
-            success: true,
-            message: "Login successful",
-            data: result,
-        });
+        const data = await authService.loginUser(email, password);
+        res.status(200).json({ success: true, data });
     } catch (err) {
         next(err);
     }
 }
 
-module.exports = { register, login };
+async function me(req, res, next) {
+    try {
+        const user = await authService.getMe(req.user.id);
+        res.status(200).json({ success: true, data: user });
+    } catch (err) {
+        next(err);
+    }
+}
+
+module.exports = { register, login, me };
