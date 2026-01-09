@@ -1,16 +1,14 @@
+// src/middlewares/validate.middleware.js
 const { validationResult } = require("express-validator");
 
 function validate(req, res, next) {
     const errors = validationResult(req);
 
     if (!errors.isEmpty()) {
-        return res.status(400).json({
-            success: false,
-            errors: errors.array().map((e) => ({
-                field: e.param,
-                message: e.msg,
-            })),
-        });
+        const err = new Error("Validation error");
+        err.statusCode = 400;
+        err.details = errors.array();
+        return next(err);
     }
 
     next();
