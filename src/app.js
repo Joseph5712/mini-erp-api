@@ -5,6 +5,7 @@ const authRoutes = require("./routes/auth.routes");
 const customersRoutes = require("./routes/customers.routes");
 const productsRoutes = require("./routes/products.routes");
 const ordersRoutes = require("./routes/orders.routes");
+const reportsRoutes = require("./routes/reports.routes");
 
 
 
@@ -23,6 +24,8 @@ app.get("/health", (req, res) => {
 app.use("/api/customers", customersRoutes);
 app.use("/api/products", productsRoutes);
 app.use("/api/orders", ordersRoutes);
+app.use("/api/reports", reportsRoutes);
+
 
 app.use("/api/auth", authRoutes);
 //app.use("/api/users", usersRoutes);
